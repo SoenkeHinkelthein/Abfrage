@@ -1,1 +1,567 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speisekarten-Umfrage</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f0f4f8, #c1d1e8);
+        }
+        .form-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2.5rem;
+            background-color: #ffffff;
+            border-radius: 2rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        .menu-category-title {
+            color: #1e40af;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-top: 2rem;
+            border-bottom: 3px solid #60a5fa;
+            padding-bottom: 0.75rem;
+            font-size: 1.5rem;
+        }
+        .menu-item-container {
+            display: flex;
+            align-items: flex-start;
+            padding: 1rem 0;
+            border-radius: 0.75rem;
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+        }
+        .menu-item-container:hover {
+            background-color: #eef2ff;
+            transform: translateY(-2px);
+        }
+        input[type="checkbox"] {
+            width: 1.75rem;
+            height: 1.75rem;
+            cursor: pointer;
+            border-radius: 0.5rem;
+            border: 2px solid #9ca3af;
+            accent-color: #3b82f6;
+            transition: all 0.2s ease-in-out;
+            margin-top: 0.25rem;
+        }
+        input[type="checkbox"]:checked {
+            border-color: #3b82f6;
+        }
+        .item-text {
+            margin-left: 1rem;
+            flex: 1;
+        }
+        .item-text strong {
+            display: block;
+            font-size: 1.125rem;
+            color: #334155;
+            margin-bottom: 0.25rem;
+        }
+        .item-text span {
+            font-size: 0.875rem;
+            color: #64748b;
+        }
+        .results-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2.5rem;
+            background-color: #fff;
+            border-radius: 2rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        .results-list li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #334155;
+            font-weight: 600;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #d1d5db;
+            border-radius: 0.75rem;
+            transition: border-color 0.2s;
+        }
+        .input-group input:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 p-4">
 
+    <div class="form-container" id="survey-form-container">
+        <h1 class="text-4xl md:text-5xl font-extrabold text-center mb-4 text-gray-900">
+            Speisekarten-Umfrage 🍽️
+        </h1>
+        <p class="text-center text-gray-600 mb-8 text-lg">
+            Bitte füllen Sie die Felder aus und wählen Sie Ihre Lieblingsgerichte.
+        </p>
+
+        <form id="menu-survey-form" class="space-y-6">
+
+            <!-- Name und Vorname Felder -->
+            <div class="input-group">
+                <label for="firstName">Vorname</label>
+                <input type="text" id="firstName" name="firstName" placeholder="Ihr Vorname" required>
+            </div>
+            <div class="input-group">
+                <label for="lastName">Nachname</label>
+                <input type="text" id="lastName" name="lastName" placeholder="Ihr Nachname" required>
+            </div>
+
+            <!-- Vorspeisen -->
+            <div class="p-6 bg-white rounded-2xl shadow-sm border border-gray-200">
+                <h2 class="menu-category-title">Vorspeisen</h2>
+                <div class="mt-4 space-y-2">
+                    <label class="menu-item-container">
+                        <input type="checkbox" name="menu_item" value="Pink Salt Edamame">
+                        <span class="item-text">
+                            <strong>Pink Salt Edamame 🌱</strong>
+                            <span>Edamame-Schoten | pinkes Salz</span>
+                        </span>
+                    </label>
+                    <label class="menu-item-container">
+                        <input type="checkbox" name="menu_item" value="Tomaten-Chili Cremesuppe">
+                        <span class="item-text">
+                            <strong>Tomaten-Chili Cremesuppe 🌶️</strong>
+                            <span>Mit Dinkel Flamm-Fritt</span>
+                        </span>
+                    </label>
+                    <label class="menu-item-container">
+                        <input type="checkbox" name="menu_item" value="Gebratenes Tuna Sashimi">
+                        <span class="item-text">
+                            <strong>Gebratenes Tuna Sashimi 🍣</strong>
+                            <span>"Henssler-Style" | Zwiebelrelish | Trüffel-Ponzu-Butter | scharfer Sesam</span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Ahoi Salat -->
+            <div class="p-6 bg-white rounded-2xl shadow-sm border border-gray-200">
+                <h2 class="menu-category-title">Ahoi Salat</h2>
+                <div class="mt-4 space-y-2">
+                    <label class="menu-item-container">
+                        <input type="checkbox" name="menu_item" value="Ahoi Salat - Classic">
+                        <span class="item-text">
+                            <strong>Classic 🥗</strong>
+                            <span>Ahoi Salat | Dressing nach Wahl</span>
+                        </span>
+                    </label>
+                    <label class="menu-item-container">
+                        <input type="checkbox" name="menu_item" value="Ahoi Salat - Chicken Teriyaki">
+                        <span class="item-text">
+                            <strong>Chicken Teriyaki 🐔</strong>
+                            <span>Ahoi Salat | Hähnchenspieße "Teriyaki-Style" | gemischter Sesam | Dressing nach Wahl</span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Fish & Chips -->
+            <div class="p-6 bg-white rounded-2xl shadow-sm border border-gray-200">
+                <h2 class="menu-category-title">Fish & Chips</h2>
+                <div class="mt-4 space-y-2">
+                    <label class="menu-item-container">
+                        <input type="checkbox" name="menu_item" value="Fish & Chips - Classic">
+                        <span class="item-text">
+                            <strong>Classic 🍟🐟</strong>
+                            <span>Das Original mit Chili-Remoulade & Zitrone</span>
+                        </span>
+                    </label>
+                    <label class="menu-item-container">
+                        <input type="checkbox" name="menu_item" value="Fish & Chips - Henssler-Style">
+                        <span class="item-text">
+                            <strong>Henssler-Style ✨</strong>
+                            <span>Mit frischen Fritten "Henssler-Style" | Chili-Remoulade | Zitrone</span>
+                        </span>
+                    </label>
+                    <label class="menu-item-container">
+                        <input type="checkbox" name="menu_item" value="Fish & Chips - Deluxe-Style">
+                        <span class="item-text">
+                            <strong>Deluxe-Style 👑</strong>
+                            <span>Mit frischen Fritten "Henssler-Style" | Trüffel-Ponzu-Butter | Zitrone</span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Shrimp 'n Chips -->
+            <div class="p-6 bg-white rounded-2xl shadow-sm border border-gray-200">
+                <h2 class="menu-category-title">Shrimp 'n Chips</h2>
+                <div class="mt-4 space-y-2">
+                    <label class="menu-item-container">
+                        <input type="checkbox" name="menu_item" value="Shrimp 'n Chips - Classic">
+                        <span class="item-text">
+                            <strong>Classic 🦐</strong>
+                            <span>Das Original! Mit Chili-Remoulade & Zitrone</span>
+                        </span>
+                    </label>
+                    <label class="menu-item-container">
+                        <input type="checkbox" name="menu_item" value="Shrimp 'n Chips - Henssler-Style">
+                        <span class="item-text">
+                            <strong>Henssler-Style ✨</strong>
+                            <span>Mit frischen Fritten "Henssler-Style" | Chili-Remoulade | Zitrone</span>
+                        </span>
+                    </label>
+                    <label class="menu-item-container">
+                        <input type="checkbox" name="menu_item" value="Shrimp 'n Chips - Deluxe-Style">
+                        <span class="item-text">
+                            <strong>Deluxe-Style 👑</strong>
+                            <span>Mit frischen Fritten "Henssler-Style" | Trüffel-Ponzu-Butter | Zitrone</span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Burger -->
+            <div class="p-6 bg-white rounded-2xl shadow-sm border border-gray-200">
+                <h2 class="menu-category-title">Burger</h2>
+                <div class="mt-4 space-y-2">
+                    <label class="menu-item-container">
+                        <input type="checkbox" name="menu_item" value="Veggie-Burger">
+                        <span class="item-text">
+                            <strong>Veggie-Burger 🍔🌱</strong>
+                            <span>knusprig gebackene Zucchini | Rotkraut | Avocadocreme | Romanasalat | Koriander | rote Zwiebeln | Peperoni | Chillicreme</span>
+                        </span>
+                    </label>
+                    <label class="menu-item-container">
+                        <input type="checkbox" name="menu_item" value="Crunchy Chicken Burger">
+                        <span class="item-text">
+                            <strong>Crunchy Chicken Burger 🍔🐔</strong>
+                            <span>knusprig gebackenes Hähnchen | Tomate | Romanasalat | Avocadocreme | rote Zwiebeln | Peperoni | Koriander | Steffen's Teriyakisauce</span>
+                        </span>
+                    </label>
+                    <label class="menu-item-container">
+                        <input type="checkbox" name="menu_item" value="Teriyaki Beef Burger">
+                        <span class="item-text">
+                            <strong>Teriyaki Beef Burger 🍔🥩</strong>
+                            <span>saftiges Beef | Tomate | Romana Salat | Zwiebelrelish | Sauerrahm | Senf | Steffen's Teriyakisauce</span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Sushi Bowls -->
+            <div class="p-6 bg-white rounded-2xl shadow-sm border border-gray-200">
+                <h2 class="menu-category-title">Sushi Bowls</h2>
+                <div class="mt-4 space-y-2">
+                    <label class="menu-item-container">
+                        <input type="checkbox" name="menu_item" value="Crunchy Cauliflower Bowl">
+                        <span class="item-text">
+                            <strong>Crunchy Cauliflower Bowl 🍚</strong>
+                            <span>gebackener Blumenkohl | Chilicreme | gemischter Sesam</span>
+                        </span>
+                    </label>
+                    <label class="menu-item-container">
+                        <input type="checkbox" name="menu_item" value="Chicken Teriyaki Bowl">
+                        <span class="item-text">
+                            <strong>Chicken Teriyaki Bowl 🍚</strong>
+                            <span>knusprig gebackenes Hähnchen | Steffen's Teriyakisauce | Chilicreme | scharfer Sesam</span>
+                        </span>
+                    </label>
+                    <label class="menu-item-container">
+                        <input type="checkbox" name="menu_item" value="Crispy Shrimp Bowl">
+                        <span class="item-text">
+                            <strong>Crispy Shrimp Bowl 🍚</strong>
+                            <span>knusprig gebackene Garnelen | Steffen's Teriyakisauce | Chilicreme | scharfer Sesam</span>
+                        </span>
+                    </label>
+                    <label class="menu-item-container">
+                        <input type="checkbox" name="menu_item" value="Lachs Bowl">
+                        <span class="item-text">
+                            <strong>Lachs Bowl 🍚</strong>
+                            <span>norwegischer Fjordlachs | Steffen's Teriyakisauce | Chilicreme | scharfer Sesam</span>
+                        </span>
+                    </label>
+                    <label class="menu-item-container">
+                        <input type="checkbox" name="menu_item" value="Tuna Bowl">
+                        <span class="item-text">
+                            <strong>Tuna Bowl 🍚</strong>
+                            <span>kurz gebratenes Tuna-Sashimi | Steffen's Teriyakisauce | Chillicreme | scharfer Sesam</span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Ahoi Classics -->
+            <div class="p-6 bg-white rounded-2xl shadow-sm border border-gray-200">
+                <h2 class="menu-category-title">Ahoi Classics</h2>
+                <div class="mt-4 space-y-2">
+                    <label class="menu-item-container">
+                        <input type="checkbox" name="menu_item" value="Currywurst Ahoi-Style">
+                        <span class="item-text">
+                            <strong>Currywurst Ahoi-Style 🌭</strong>
+                            <span>Eigens für Ahoi gefertigte Kalbswurst und frischen Fritten "Henssler-Style"</span>
+                        </span>
+                    </label>
+                    <label class="menu-item-container">
+                        <input type="checkbox" name="menu_item" value="Schnitzel Ahoi-Style">
+                        <span class="item-text">
+                            <strong>Schnitzel Ahoi-Style 🥩</strong>
+                            <span>180g leckeres Schnitzel vom Landschwein mit frischen Fritten "Henssler-Style"</span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Süßes zum Schluss -->
+            <div class="p-6 bg-white rounded-2xl shadow-sm border border-gray-200">
+                <h2 class="menu-category-title">Süßes zum Schluss</h2>
+                <div class="mt-4 space-y-2">
+                    <label class="menu-item-container">
+                        <input type="checkbox" name="menu_item" value="Churros">
+                        <span class="item-text">
+                            <strong>Churros</strong>
+                            <span>mit belgischem Milchschokoladen-Eis | Karamellsauce | Seute Deern Gewürz | Puderzucker | Minze</span>
+                        </span>
+                    </label>
+                    <label class="menu-item-container">
+                        <input type="checkbox" name="menu_item" value="Lauwarmes Schokotörtchen">
+                        <span class="item-text">
+                            <strong>Lauwarmes Schokotörtchen 🍰</strong>
+                            <span>mit Bourbon-Vanilleeis | rote Grütze | Puderzucker | Minze</span>
+                        </span>
+                    </label>
+                    <label class="menu-item-container">
+                        <input type="checkbox" name="menu_item" value="Kugel Eis">
+                        <span class="item-text">
+                            <strong>Kugel Eis 🍦</strong>
+                            <span>Bourbon Vanille oder Belgische Milchschokolade</span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="mt-8 flex justify-center">
+                <button type="submit" id="submit-button" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 transform hover:scale-105">
+                    Umfrage absenden
+                </button>
+            </div>
+        </form>
+
+        <div id="loading" class="mt-8 p-6 bg-yellow-100 text-yellow-800 rounded-lg hidden">
+            Ihre Auswahl wird gespeichert...
+        </div>
+
+        <div id="results-success" class="mt-8 p-6 bg-green-100 text-green-800 rounded-lg hidden">
+            <h3 class="text-2xl font-semibold mb-4">Vielen Dank für Ihre Teilnahme!</h3>
+            <p>Ihre Auswahl wurde erfolgreich gesendet und gespeichert.</p>
+        </div>
+    </div>
+    
+    <div class="results-container">
+        <h2 class="text-2xl md:text-3xl font-extrabold text-center mb-6 text-gray-900">
+            Live-Ergebnisse
+        </h2>
+        <p class="text-center text-gray-600 mb-4">
+            Anzahl der Stimmen pro Gericht in Echtzeit.
+        </p>
+        <div id="live-results" class="space-y-2">
+            <ul id="results-list" class="results-list">
+                <!-- Ergebnisse werden hier dynamisch eingefügt -->
+            </ul>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, doc, runTransaction } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Global variables provided by the Canvas environment
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        let db;
+        let auth;
+        let userId;
+        let isAuthReady = false;
+
+        // Initialize Firebase and set up authentication
+        const setupFirebase = async () => {
+            try {
+                const app = initializeApp(firebaseConfig);
+                auth = getAuth(app);
+                db = getFirestore(app);
+
+                // Authenticate the user
+                if (initialAuthToken) {
+                    await signInWithCustomToken(auth, initialAuthToken);
+                } else {
+                    await signInAnonymously(auth);
+                }
+
+                // Listen for auth state changes
+                onAuthStateChanged(auth, (user) => {
+                    if (user) {
+                        userId = user.uid;
+                        isAuthReady = true;
+                        console.log("Firebase initialized. User ID:", userId);
+                        // Start listening for real-time results once authenticated
+                        listenForResults();
+                    } else {
+                        console.log("No user is signed in.");
+                        isAuthReady = false;
+                    }
+                });
+            } catch (error) {
+                console.error("Firebase setup failed:", error);
+            }
+        };
+
+        const form = document.getElementById('menu-survey-form');
+        const surveyContainer = document.getElementById('survey-form-container');
+
+        // Function to save survey data to Firestore
+        const saveSurveyData = async (firstName, lastName, selectedItems) => {
+            if (!isAuthReady) {
+                console.error("Firebase is not ready yet.");
+                return;
+            }
+
+            // Get form elements here to ensure they exist in the DOM
+            const submitButton = document.getElementById('submit-button');
+            const loadingDiv = document.getElementById('loading');
+            const successDiv = document.getElementById('results-success');
+
+            // Path to the user's private data collection
+            const userSurveyCollection = `/artifacts/${appId}/users/${userId}/survey_results`;
+            
+            // Path to the public data collection for real-time results
+            const publicResultsCollection = `/artifacts/${appId}/public/data/survey_counts`;
+            
+            try {
+                loadingDiv.classList.remove('hidden');
+                submitButton.disabled = true;
+
+                // Save user's submission to their private collection
+                await addDoc(collection(db, userSurveyCollection), {
+                    firstName: firstName,
+                    lastName: lastName,
+                    items: selectedItems,
+                    timestamp: new Date()
+                });
+
+                // Use a transaction to update public counts
+                await runTransaction(db, async (transaction) => {
+                    // First, perform all reads
+                    const reads = await Promise.all(selectedItems.map(item => {
+                        const itemDocRef = doc(db, publicResultsCollection, item);
+                        return transaction.get(itemDocRef);
+                    }));
+                    
+                    // Then, perform all writes
+                    reads.forEach((itemDoc, index) => {
+                        const item = selectedItems[index];
+                        const itemDocRef = doc(db, publicResultsCollection, item);
+                        if (itemDoc.exists()) {
+                            const newCount = itemDoc.data().count + 1;
+                            transaction.update(itemDocRef, { count: newCount });
+                        } else {
+                            transaction.set(itemDocRef, { count: 1 });
+                        }
+                    });
+                });
+
+                loadingDiv.classList.add('hidden');
+                successDiv.classList.remove('hidden');
+                console.log("Survey data saved successfully.");
+
+                // Optionally hide the form after successful submission
+                setTimeout(() => {
+                    surveyContainer.classList.add('hidden');
+                }, 1000);
+                
+            } catch (e) {
+                console.error("Error adding document: ", e);
+                loadingDiv.classList.add('hidden');
+                submitButton.disabled = false;
+                const messageBox = document.createElement('div');
+                messageBox.classList.add('mt-8', 'p-4', 'bg-red-100', 'text-red-800', 'rounded-lg');
+                messageBox.textContent = 'Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.';
+                surveyContainer.appendChild(messageBox);
+            }
+        };
+
+        // Function to listen for real-time updates and display results
+        const listenForResults = () => {
+            if (!isAuthReady) return;
+
+            // Get the results list element here to ensure it's in the DOM
+            const resultsList = document.getElementById('results-list');
+
+            const publicResultsCollection = `/artifacts/${appId}/public/data/survey_counts`;
+            const q = query(collection(db, publicResultsCollection));
+            
+            onSnapshot(q, (querySnapshot) => {
+                const results = [];
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    results.push({ name: doc.id, count: data.count });
+                });
+
+                resultsList.innerHTML = '';
+                const sortedResults = results.sort((a, b) => b.count - a.count);
+
+                sortedResults.forEach(({ name, count }) => {
+                    const listItem = document.createElement('li');
+                    listItem.classList.add('flex', 'justify-between', 'items-center', 'py-2', 'px-4', 'bg-gray-50', 'rounded-lg');
+                    listItem.innerHTML = `
+                        <span>${name}</span>
+                        <span class="bg-blue-200 text-blue-800 text-sm font-bold px-3 py-1 rounded-full">${count}</span>
+                    `;
+                    resultsList.appendChild(listItem);
+                });
+            }, (error) => {
+                console.error("Error listening to collection:", error);
+            });
+        };
+
+        // Handle form submission
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            // Get form elements here to ensure they exist in the DOM
+            const firstNameInput = document.getElementById('firstName');
+            const lastNameInput = document.getElementById('lastName');
+
+            const firstName = firstNameInput.value;
+            const lastName = lastNameInput.value;
+            const checkboxes = document.querySelectorAll('input[name="menu_item"]:checked');
+            
+            if (!firstName || !lastName || checkboxes.length === 0) {
+                const messageBox = document.createElement('div');
+                messageBox.classList.add('mt-8', 'p-4', 'bg-red-100', 'text-red-800', 'rounded-lg');
+                messageBox.textContent = 'Bitte füllen Sie alle Felder aus und wählen Sie mindestens ein Gericht.';
+                surveyContainer.appendChild(messageBox);
+                return;
+            }
+
+            const selectedItems = Array.from(checkboxes).map(cb => cb.value);
+            await saveSurveyData(firstName, lastName, selectedItems);
+        });
+
+        // Start the Firebase setup
+        setupFirebase();
+    </script>
+</body>
+</html>
